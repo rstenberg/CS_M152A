@@ -1,0 +1,60 @@
+Overview:
+	1. Resemblance to C: case sensitive, same style comments, operators, etc.
+	2. Two standards: Verilog-1995, 2001, both supported by ISE
+	3. VHDL is the other widely used HDL
+
+Functions served by Verilog:
+	1. Describe your digital logic design in high-level way instead of using schematics (synthesizeable code)
+	2. Model elements that interact with your design (behavioral models/testbenches)
+
+Data Types:
+	1. wire
+		Models basic wire that holds transient values
+		Only wires can be used on LHS of continuous assign statement
+	2. reg
+		Anything that stores a value 
+		Only regs can be used on LHS of non-continuous assign statement
+
+Data Values:
+	1. Values: 1,0,x/X (unknown),z/Z (high impedance)
+	2. Radices: d(decimal), h(hex), o(octal), b(binary)
+	3. Format: <size>'<radix><value>			// Notes -> size is in bits
+	Example:
+		8'h7B	// 'h = hex radix
+
+Operators:
+	Bitwise:
+		~ not 
+		& and
+		| or
+		^ xor
+		~^ nor
+	Reduction:
+		bitwise operation on a single operand to produce a one bit result
+	Logical:
+		output one but result
+		example: a&&b == (a AND b)
+	Arithmetic: +,-,*,/,% (mod, takes the sign of operand 1)
+	Shift:
+		Logical -> replace with 0's (<<, >>)
+		Arithmetic -> replace with most significant bit (<<<, >>>)
+	Conditional: sel ? a : b         <--- if sel then a, otherwise b
+	Concatentation: {a,b}
+	Replication: {n{m}}
+	Assignment:
+		Blocking: = assignment immediate, happens first (combinational logic)
+		Non-blocking: <= assignments deffered until all right hand sides have been evaluated (like register or flip-flop -> sequential logic)
+
+Modules:
+	Inputs/outputs = wires by default
+	Concurrent logic blocks:
+		1. Continuous assignments
+		2. Always blocks (either sequanetial or combinatorial)
+			Sensitivity list: 
+				Level sensitive: changes to any signal in this list will invoke the always block (combinational)
+					Shorthand for any right hand value: (@*)
+					ex: always @*
+				Edge sensitive: specified singal edges with invoke always block (sequential)
+					ex: always @ (posedge clk or posedge reset)
+		3. Initial blocks (only used in behavioral modeling)
+		4. Forever blocks (only used in behavioral modeling)
